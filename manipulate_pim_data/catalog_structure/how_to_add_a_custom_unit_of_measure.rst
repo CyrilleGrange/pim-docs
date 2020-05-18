@@ -16,6 +16,7 @@ Create a new Symfony bundle:
 .. code-block:: php
 
 	<?php
+	//#/src/Acme/Bundle/MyMeasureBundle/AcmeMyMeasureBundle.php
 
 	namespace Acme\Bundle\MyMeasureBundle;
 
@@ -25,16 +26,18 @@ Create a new Symfony bundle:
 	{
 	}
 
-Register the bundle in AppKernel:
+Register the bundle in bundles.php :
 
 .. code-block:: php
 
-    public function registerProjectBundles()
-    {
-        // ...
-            new Acme\Bundle\MyMeasureBundle\AcmeMyMeasureBundle(),
-        // ...
-    }
+	<?php
+	//#/config/bundles.php
+	
+	return [
+        	// ...
+       		Acme\Bundle\MyMeasureBundle\AcmeMyMeasureBundle::class => ['dev' => true, 'test' => true, 'prod' => true],
+        	// ...
+	];
 
 Configure our unit of measure
 -----------------------------
