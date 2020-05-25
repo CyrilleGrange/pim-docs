@@ -206,7 +206,8 @@ You also need to configure the mapping override in your application configuratio
 
 .. code-block:: yaml
 
-    # app/config/config.yml
+    # config/services/appServices.yml
+    [...]
     akeneo_storage_utils:
         mapping_overrides:
             -
@@ -232,12 +233,32 @@ You need to update your category entity parameter used in ``entities.yml`` file:
 
    .. code-block:: php
 
-       # /src/Acme/Bundle/CatalogBundle/DependencyInjection/AcmeAppExtension.php
-       public function load(array $configs, ContainerBuilder $container)
-       {
-           /** ... **/
-           $loader->load('entities.yml');
-       }
+       # /src/Acme/Bundle/CatalogBundle/DependencyInjection/AcmeCatalogExtension.php
+        <?php
+
+        namespace Acme\Bundle\CatalogBundle\DependencyInjection;
+
+        use Symfony\Component\Config\FileLocator;
+        use Symfony\Component\DependencyInjection\ContainerBuilder;
+        use Symfony\Component\DependencyInjection\Loader;
+        use Symfony\Component\HttpKernel\DependencyInjection\Extension;
+
+        /**
+         */
+        class AcmeCatalogExtension extends Extension
+        {
+            /**
+             * {@inheritDoc}
+             */
+            public function load(array $configs, ContainerBuilder $container)
+            {
+                /** ... **/
+                // load service
+                $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+                $loader->load('entities.yml');
+            }
+
+        }
 
 .. note::
    You don't have to add a lot of code to the Doctrine configuration to resolve target entities.
